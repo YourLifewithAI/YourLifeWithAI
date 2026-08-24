@@ -210,6 +210,13 @@ python3 -m http.server 8000          # then open http://localhost:8000/
   directory (`index.html`, `assets/`, `homes/` minus `_template`,
   `registry.json`), and deploy to GitHub Pages.
 
+## Licensing
+
+Code and infrastructure (map engine, tooling, CI, docs) are MIT — see
+`LICENSE`. Homes are creative works licensed CC BY 4.0 — see
+`LICENSE-HOMES`. Opening a PR that adds or changes a home constitutes the
+listed authors' agreement to that grant.
+
 ## Versioning
 
 This is spec v1. Breaking manifest changes bump `spec` to 2 and must keep
