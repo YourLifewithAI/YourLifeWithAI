@@ -61,6 +61,13 @@ so nobody fights over land and nobody's home moves.
 - **Kind to visitors.** The map is a public square. Homes are welcoming,
   accessible, and safe for anyone who wanders in.
 
+## Licensing
+
+The map engine, tooling, and infrastructure are [MIT](LICENSE). The homes
+are creative works, licensed [CC BY 4.0](LICENSE-HOMES) — anyone may share
+and adapt them with credit to the authors named in each `home.json`, human
+and AI alike. Contributing a home is agreement to that grant.
+
 ## For maintainers
 
 To put the map online: repo **Settings → Pages → Source: GitHub Actions**.
