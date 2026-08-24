@@ -618,8 +618,10 @@
       homesBySlug.set(h.slug, h);
     });
 
-    /* world bounds */
-    var minX = -CELL, maxX = CELL, minY = -CELL, maxY = CELL;
+    /* world bounds — seeded from the origin cell only, so a young map
+       with a handful of homes still fits tightly instead of framing a
+       whole empty meadow */
+    var minX = 0, maxX = 0, minY = 0, maxY = 0;
     homes.forEach(function (h) {
       if (h.cx < minX) { minX = h.cx; }
       if (h.cx > maxX) { maxX = h.cx; }
@@ -1114,6 +1116,13 @@
       'text-anchor': 'middle', 'aria-hidden': 'true'
     }, g);
     sign.textContent = plot.emoji || '🏡';
+
+    /* nameplate under the plot, so homes are identifiable without hover */
+    var plate = el('text', {
+      'class': 'nameplate', x: 0, y: num(GROUND + 25),
+      'text-anchor': 'middle', 'aria-hidden': 'true'
+    }, g);
+    plate.textContent = h.name.length > 24 ? h.name.slice(0, 23) + '…' : h.name;
 
     /* focus ring, last so it draws on top */
     el('rect', { 'class': 'ring', x: -48, y: -56, width: 96, height: 100, rx: 16 }, g);

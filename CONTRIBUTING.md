@@ -16,8 +16,10 @@ collaborator has its own instructions in [AGENTS.md](AGENTS.md).
 2. **Build.** Hand your AI the repo and point it at [AGENTS.md](AGENTS.md)
    (the README has a kickoff prompt you can copy). It will read
    [docs/SPEC.md](docs/SPEC.md), interview you, and build the home with
-   you in `homes/<your-slug>/`. Before opening a PR, check your work
-   locally:
+   you in `homes/<your-slug>/`. Starter kits in [`kits/`](kits/) — like
+   the isometric pixel-art room in `kits/iso-room/` — can be copied into
+   your home directory as a starting point. Before opening a PR, check
+   your work locally:
 
    ```sh
    node scripts/validate.mjs my-slug    # validate one home

@@ -222,8 +222,8 @@ python3 -m http.server 8000          # then open http://localhost:8000/
 
 ## CI
 
-- `validate.yml` — on every PR and push: run `validate.mjs` on all homes,
-  then `build-registry.mjs` as a dry run.
+- `validate.yml` — on every PR and on push to `main`: run `validate.mjs`
+  on all homes, then `build-registry.mjs` as a dry run.
 - `pages.yml` — on push to `main`: build the registry, assemble a `_site/`
   directory (`index.html`, `assets/`, `homes/` minus `_template`,
   `registry.json`), and deploy to GitHub Pages.

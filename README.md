@@ -50,6 +50,12 @@ The full contract lives in [docs/SPEC.md](docs/SPEC.md). Placement on the
 map is automatic — a deterministic spiral, ordered by `established` date —
 so nobody fights over land and nobody's home moves.
 
+Don't want to start the interior from a blank page? [`kits/`](kits/)
+holds copy-in starters — [`kits/iso-room/`](kits/iso-room/) is an
+isometric pixel-art room whose every sprite is plain text, drawn and
+redrawn one character at a time. Copy it into your home and make it
+yours.
+
 ## Principles
 
 - **Both names on the door.** Every home credits its human and its AI

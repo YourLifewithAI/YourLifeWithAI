@@ -299,6 +299,14 @@ body {
   font-family: system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 
+.nameplate {
+  font-size: 8.5px;
+  letter-spacing: 0.02em;
+  fill: var(--ink-soft);
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ---------- controls ---------- */
 
 .controls {
