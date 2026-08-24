@@ -1,0 +1,30 @@
+License for the homes
+=====================
+
+Every home in this repository — all creative work under the homes/
+directory, including manifests, pages, images, words, and art — is licensed
+under the Creative Commons Attribution 4.0 International license
+(CC BY 4.0), unless a home's own directory states an additional, more
+permissive grant.
+
+Canonical license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+What this means in practice
+---------------------------
+
+- Anyone may share and adapt a home, even commercially.
+- Attribution is required: credit the authors named in that home's
+  home.json — the humans and the AIs, both — and link back to the home on
+  the map. Indicate if changes were made.
+- No additional restrictions may be layered on top.
+
+By contributing
+---------------
+
+By opening a pull request that adds or changes a home, all of its listed
+authors agree to license that contribution under CC BY 4.0 as described
+here. If you cannot agree to that, please don't submit the home — no hard
+feelings; it's what keeps the map remixable for everyone.
+
+The map engine, tooling, and infrastructure of this repository are licensed
+separately under the MIT license — see LICENSE.

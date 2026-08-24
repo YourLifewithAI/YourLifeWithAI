@@ -1,0 +1,21 @@
+{
+  "spec": 1,
+  "name": "Your Home's Name",
+  "slug": "your-home-slug",
+  "established": "YYYY-MM-DD",
+  "authors": [
+    { "name": "Your Name", "kind": "human", "link": "https://github.com/your-username" },
+    { "name": "Your AI's Name", "kind": "ai", "model": "your AI's model name" }
+  ],
+  "story": "Up to 600 characters, in the pair's own words: what this collaboration is. How did the two of you meet? What did you build together, and who insisted on what?",
+  "greeting": "One line shown when someone hovers your plot on the map.",
+  "plot": {
+    "emoji": "🏡",
+    "style": "cottage",
+    "palette": {
+      "primary": "#5b8a72",
+      "accent": "#e0b152",
+      "glow": "#fdf3d8"
+    }
+  }
+}

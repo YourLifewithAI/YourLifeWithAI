@@ -1,0 +1,553 @@
+/* Your Life With AI — map styles.
+   Vanilla CSS, zero external resources. Day/night themes via tokens:
+   day tokens live on :root, night tokens on :root.theme-night (and, for a
+   flash-free first paint before JS runs, in the dark-scheme media block). */
+
+:root {
+  /* page */
+  --bg0: #f7ecd7;
+  --bg1: #e3edc9;
+  --bg2: #b9d99b;
+  --ink: #2e3a2a;
+  --ink-soft: #5c6a52;
+  --card: #fffdf6;
+  --card-border: rgba(94, 82, 48, 0.22);
+  --card-shadow: 0 10px 30px rgba(70, 60, 20, 0.18);
+  --link: #8a5a18;
+  --btn-bg: rgba(255, 253, 246, 0.92);
+  --btn-ink: #4c5540;
+  --btn-border: rgba(94, 82, 48, 0.28);
+  --focus: #b45309;
+  /* meadow */
+  --road: #dcc9a2;
+  --road-edge: #c9b287;
+  --cell-grass: rgba(255, 255, 255, 0.22);
+  --grass: #79a862;
+  --grass2: #8fbc74;
+  --tree: #6fa35c;
+  --tree-dark: #55884a;
+  --tree-trunk: #8a6a45;
+  --stone: #b9b3a4;
+  --fence: #a5875f;
+  --soil: #9b7a52;
+  --flower-a: #e4788e;
+  --flower-b: #f2c14e;
+  --flower-c: #ffffff;
+  --shadow: rgba(64, 78, 40, 0.20);
+  --outline: rgba(46, 58, 42, 0.55);
+  --beam: rgba(255, 236, 170, 0);
+  --chip-human: #dceefb;
+  --chip-human-ink: #17537a;
+  --chip-ai: #f3e3fb;
+  --chip-ai-ink: #6b2f8c;
+}
+
+:root.theme-night {
+  --bg0: #0a1026;
+  --bg1: #17203f;
+  --bg2: #223440;
+  --ink: #e9edf7;
+  --ink-soft: #a4aec6;
+  --card: #161d33;
+  --card-border: rgba(180, 195, 235, 0.22);
+  --card-shadow: 0 12px 34px rgba(0, 0, 8, 0.55);
+  --link: #f5c268;
+  --btn-bg: rgba(23, 30, 53, 0.92);
+  --btn-ink: #dfe6f5;
+  --btn-border: rgba(180, 195, 235, 0.30);
+  --focus: #ffd166;
+  --road: #3c4258;
+  --road-edge: #2e3448;
+  --cell-grass: rgba(190, 220, 255, 0.05);
+  --grass: #35594e;
+  --grass2: #3f6b5a;
+  --tree: #2f5a4b;
+  --tree-dark: #24463c;
+  --tree-trunk: #4c4034;
+  --stone: #5a6070;
+  --fence: #5d5344;
+  --soil: #4a3f33;
+  --flower-a: #a86a7f;
+  --flower-b: #b99a55;
+  --flower-c: #9aa4bd;
+  --shadow: rgba(0, 0, 10, 0.42);
+  --outline: rgba(8, 12, 26, 0.7);
+  --beam: rgba(255, 236, 170, 0.14);
+  --chip-human: #1d3a52;
+  --chip-human-ink: #a8d4f5;
+  --chip-ai: #3a2450;
+  --chip-ai-ink: #d9b8f2;
+}
+
+/* Before JS picks a theme class, follow the system scheme so the first
+   paint of the page chrome doesn't flash the wrong world. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.theme-day) {
+    --bg0: #0a1026;
+    --bg1: #17203f;
+    --bg2: #223440;
+    --ink: #e9edf7;
+    --ink-soft: #a4aec6;
+    --card: #161d33;
+    --card-border: rgba(180, 195, 235, 0.22);
+    --card-shadow: 0 12px 34px rgba(0, 0, 8, 0.55);
+    --link: #f5c268;
+    --btn-bg: rgba(23, 30, 53, 0.92);
+    --btn-ink: #dfe6f5;
+    --btn-border: rgba(180, 195, 235, 0.30);
+    --focus: #ffd166;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 46%, var(--bg2) 100%);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  transition: background 0.6s ease, color 0.4s ease;
+}
+
+/* ---------- header ---------- */
+
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  padding: 0.8rem 1.1rem 0.7rem;
+  position: relative;
+  z-index: 5;
+}
+
+.title-block {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.7rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.22rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-left: auto;
+}
+
+.home-count {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.home-count b {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.build-link {
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--link);
+  text-decoration: none;
+  border: 1px solid var(--card-border);
+  background: var(--btn-bg);
+  border-radius: 999px;
+  padding: 0.34rem 0.85rem;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.build-link:hover { transform: translateY(-1px); box-shadow: var(--card-shadow); }
+.build-link:focus-visible,
+.panel-close:focus-visible,
+.controls button:focus-visible,
+.panel-enter:focus-visible,
+.notice a:focus-visible {
+  outline: 2.5px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- map stage ---------- */
+
+#mapWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+#world {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#world.dragging { cursor: grabbing; }
+
+/* ---------- generative world pieces ---------- */
+
+.cell-grass { fill: var(--cell-grass); }
+.road { stroke: var(--road); }
+.road-edge { stroke: var(--road-edge); }
+.door-path { stroke: var(--road-edge); }
+.tuft { stroke: var(--grass); }
+.tuft.alt { stroke: var(--grass2); }
+.tree-leaf { fill: var(--tree); }
+.tree-leaf.dark { fill: var(--tree-dark); }
+.tree-trunk { fill: var(--tree-trunk); }
+.stone { fill: var(--stone); }
+.fence-bit { stroke: var(--fence); }
+.soil { fill: var(--soil); }
+.plot-shadow { fill: var(--shadow); }
+.flower-a { fill: var(--flower-a); }
+.flower-b { fill: var(--flower-b); }
+.flower-c { fill: var(--flower-c); }
+
+.tuft, .fence-bit, .tree-leaf, .stone, .cell-grass, .soil,
+.flower-a, .flower-b, .flower-c, .road, .road-edge {
+  transition: fill 0.6s ease, stroke 0.6s ease;
+}
+
+/* windows: each plot group sets --glow and --win-day inline */
+.win {
+  fill: var(--win-day, #5a6577);
+  transition: fill 0.6s ease;
+}
+:root.theme-night .win { fill: var(--glow, #ffe9a3); }
+
+.beam {
+  fill: var(--beam);
+  transition: fill 0.6s ease;
+}
+:root.theme-day .beam { display: none; }
+
+.firefly {
+  fill: #ffe9a3;
+  opacity: 0;
+  animation: firefly var(--dur, 5.2s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+:root.theme-day .firefly { display: none; }
+
+@keyframes firefly {
+  0%, 100% { opacity: 0; transform: translate(0, 0); }
+  22% { opacity: 0.95; transform: translate(1.5px, -2.5px); }
+  46% { opacity: 0.12; transform: translate(3px, -1px); }
+  68% { opacity: 0.8; transform: translate(1px, 1.8px); }
+  86% { opacity: 0.2; transform: translate(-1px, 0.6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firefly { animation: none; opacity: 0.55; }
+  body, .win, .beam, .build-link,
+  .tuft, .fence-bit, .tree-leaf, .stone, .cell-grass, .soil,
+  .flower-a, .flower-b, .flower-c, .road, .road-edge { transition: none; }
+}
+
+/* ---------- plots ---------- */
+
+.plot { cursor: pointer; outline: none; }
+
+.plot .ring {
+  fill: none;
+  stroke: var(--focus);
+  stroke-width: 2.5;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+
+.plot:focus .ring { opacity: 0.95; }
+.plot:focus:not(:focus-visible) .ring { opacity: 0; }
+.plot:focus-visible .ring { opacity: 0.95; }
+.plot:hover .ring { opacity: 0.45; }
+
+.sign-emoji {
+  font-size: 13px;
+  font-family: system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.nameplate {
+  font-size: 8.5px;
+  letter-spacing: 0.02em;
+  fill: var(--ink-soft);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- controls ---------- */
+
+.controls {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  z-index: 6;
+}
+
+.controls button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(20, 24, 12, 0.16);
+  transition: transform 0.12s ease, background 0.4s ease;
+  padding: 0;
+}
+
+.controls button:hover { transform: translateY(-1px); }
+.controls button:active { transform: translateY(0.5px); }
+.controls button svg { width: 19px; height: 19px; }
+
+:root.theme-day .icon-sun { display: none; }
+:root.theme-night .icon-moon { display: none; }
+/* pre-JS fallback: show the moon */
+:root:not(.theme-day):not(.theme-night) .icon-sun { display: none; }
+
+/* ---------- tooltip ---------- */
+
+.tooltip {
+  position: fixed;
+  z-index: 30;
+  transform: translate(-50%, calc(-100% - 14px));
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  padding: 0.5rem 0.75rem;
+  max-width: 270px;
+  pointer-events: none;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.tooltip .tt-name { font-weight: 700; }
+.tooltip .tt-emoji { margin-right: 0.35rem; }
+.tooltip .tt-greeting {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ---------- detail panel ---------- */
+
+.panel {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  bottom: auto;
+  width: min(350px, calc(100vw - 1.8rem));
+  max-height: calc(100% - 1.8rem);
+  overflow-y: auto;
+  z-index: 20;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.panel-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.panel-emoji {
+  font-size: 1.9rem;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  font-family: system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.panel h2 {
+  margin: 0 2rem 0.15rem 0;
+  font-size: 1.18rem;
+  line-height: 1.25;
+}
+
+.panel-est {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.panel-authors {
+  list-style: none;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.panel-authors li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.14rem 0.5rem;
+}
+
+.badge-human { background: var(--chip-human); color: var(--chip-human-ink); }
+.badge-ai { background: var(--chip-ai); color: var(--chip-ai-ink); }
+
+.author-model {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.panel-authors a { color: var(--link); }
+
+.panel-story {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+
+.panel-enter {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--link);
+  text-decoration: none;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 0.42rem 0.95rem;
+  transition: transform 0.15s ease;
+}
+
+.panel-enter:hover { transform: translateX(2px); }
+
+/* ---------- notices (empty state / dev hint) ---------- */
+
+.notice {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  width: min(430px, calc(100vw - 2rem));
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  padding: 1.2rem 1.35rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.notice h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.notice p { margin: 0.35rem 0; }
+
+.notice code {
+  display: block;
+  background: rgba(125, 125, 125, 0.13);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  margin: 0.4rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  overflow-x: auto;
+}
+
+.notice a { color: var(--link); font-weight: 650; }
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 640px) {
+  .topbar { padding: 0.65rem 0.8rem 0.55rem; }
+  .topbar h1 { font-size: 1.05rem; }
+  .subtitle { font-size: 0.78rem; }
+
+  .panel {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 62vh;
+    border-radius: 18px 18px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-bottom: max(1.2rem, env(safe-area-inset-bottom));
+  }
+
+  .controls { right: 0.6rem; bottom: 0.7rem; }
+  .controls button { width: 40px; height: 40px; }
+}
+
+@media (max-width: 420px) {
+  .topbar-right { gap: 0.6rem; }
+  .home-count { font-size: 0.78rem; }
+  .build-link { font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+}

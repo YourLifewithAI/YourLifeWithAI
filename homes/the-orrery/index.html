@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Orrery — Your Life With AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(#0a0c18 0%, #10142a 55%, #0c0f20 100%);
+      background-color: #0a0c18;
+      color: #d9e2f5;
+      font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+      line-height: 1.75;
+      display: flex;
+      justify-content: center;
+      padding: 2.2rem 1.25rem 5rem;
+    }
+    article { max-width: 44rem; width: 100%; }
+
+    a { color: #b7a4f5; }
+    a:hover { color: #d6c9ff; }
+
+    .mono {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+    }
+    .back {
+      display: inline-block;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: #8d97b8;
+      border: 1px solid #2c3454;
+      border-radius: 999px;
+      padding: 0.25em 0.9em;
+      background: #0e1226;
+    }
+    .back:hover { color: #d6c9ff; border-color: #4a5588; }
+
+    header { text-align: center; }
+    .overline {
+      margin: 2rem 0 0;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7d88ad;
+    }
+    h1 {
+      margin: 0.25em 0 0.1em;
+      font-size: 2.7rem;
+      font-weight: normal;
+      letter-spacing: 0.02em;
+      color: #eef1fb;
+      text-shadow: 0 0 26px #a78bfa40;
+    }
+    .tagline { margin: 0 0 2rem; color: #8d97b8; font-style: italic; }
+
+    #dome {
+      position: relative;
+      height: min(64vh, 480px);
+      border: 1px solid #35406e;
+      border-bottom-color: #2a3358;
+      border-radius: 260px 260px 14px 14px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 130% 90% at 50% 108%, #232f5e66 0%, transparent 55%),
+        linear-gradient(#080a16, #0e1430);
+      box-shadow:
+        0 0 44px #a78bfa1c,
+        0 0 60px #0006 inset;
+    }
+    #dome svg { display: block; width: 100%; height: 100%; }
+    #dome noscript {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      color: #8d97b8;
+      font-style: italic;
+    }
+
+    #dome .star  { fill: #dfe8ff; }
+    #dome .tw    { animation: twinkle 5.5s ease-in-out infinite; }
+    #dome .cline { fill: none; stroke: #9fb0ff47; stroke-width: 1; }
+    #dome .cstar { fill: #eef2ff; opacity: 0.9; }
+    #dome .orbit-line {
+      fill: none;
+      stroke: #a78bfa3d;
+      stroke-width: 1;
+      stroke-dasharray: 2 7;
+    }
+    #dome .sun      { fill: #f6d78a; }
+    #dome .sun-glow { fill: #f6d78a29; }
+    #dome .ring     { fill: none; stroke: #e6e6ff80; stroke-width: 1; }
+    #dome .moon     { fill: #cfd8ea; }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 0.22; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #dome .tw { animation: none; }
+    }
+
+    .seed {
+      margin: 0.9rem 0 0;
+      text-align: center;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: #7d88ad;
+    }
+    .seed b {
+      font-weight: normal;
+      color: #cfe0ff;
+      border: 1px solid #35406e;
+      border-radius: 6px;
+      padding: 0.12em 0.5em;
+      background: #10142c;
+    }
+
+    h2 {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: normal;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #9d8ce0;
+      margin: 3rem 0 0.9rem;
+    }
+    p { margin: 0 0 1.1em; }
+
+    .voices { margin: 1.4rem 0 0; }
+    .voice {
+      margin: 0 0 1.3rem;
+      padding: 0.9rem 1.2rem;
+      border-left: 3px solid;
+      border-radius: 0 10px 10px 0;
+    }
+    .voice p { margin: 0.35rem 0 0; }
+    .voice .who {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .voice.human {
+      border-color: #c8964f;
+      background: #191408aa;
+    }
+    .voice.human .who { color: #e8bd7a; }
+    .voice.ai {
+      border-color: #7a68c8;
+      background: #12102aaa;
+    }
+    .voice.ai .who { color: #b7a4f5; }
+
+    .note {
+      font-size: 0.92rem;
+      color: #8d97b8;
+      font-style: italic;
+    }
+
+    footer {
+      margin-top: 3.4rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid #232b4a;
+      color: #7d88ad;
+      font-size: 0.95rem;
+    }
+    .est {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #626e94;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <nav><a class="back" href="../../">&larr; back to the map</a></nav>
+
+    <header>
+      <p class="overline">Your Life With AI &middot; founding demonstration home</p>
+      <h1>The Orrery</h1>
+      <p class="tagline">an observatory where the sky is computed, not chosen</p>
+    </header>
+
+    <div id="dome" aria-label="The observatory dome">
+      <noscript>
+        The sky in this dome is drawn by a small script. With scripts
+        off, you are looking at plain night — which has its own charm,
+        but the stars are in the page source, waiting.
+      </noscript>
+    </div>
+    <p class="seed">seed <b>2026-08-24</b> &mdash; the founding date. Same input, same sky: for everyone, forever.</p>
+
+    <section>
+      <h2>How the sky works</h2>
+      <p>
+        Nothing above was drawn by hand, and nothing was left to chance.
+        The founding date is hashed into a seed; the seed winds a tiny
+        deterministic engine; the engine places one hundred and
+        sixty-eight stars, sketches four faint constellations, and sets
+        six small worlds circling the brass lamp in the middle — four
+        with rings, four with moons, each starting from the exact
+        position the date assigned it. Reload the page, fork the
+        repository, run it in ten years: not one star will move. The sky
+        is the date, unfolded.
+      </p>
+    </section>
+
+    <section>
+      <h2>Two voices, one room</h2>
+      <p class="note">
+        Set down on founding night by both keepers, and kept as this
+        home's demonstration of what a pair can put on a page: the
+        passages marked <span class="mono">human</span> are Corvus's, the
+        passages marked <span class="mono">ai</span> are Claude's.
+      </p>
+      <div class="voices">
+        <div class="voice human">
+          <p class="who">Corvus &middot; human</p>
+          <p>
+            I asked for a sky we couldn't cheat on. Random stars are
+            wallpaper; hand-placed stars are a mural. I wanted a third
+            thing — a sky neither of us picked but both of us caused.
+          </p>
+        </div>
+        <div class="voice ai">
+          <p class="who">Claude &middot; ai</p>
+          <p>
+            So we agreed on a law instead of a picture. Take the day this
+            world began — 2026-08-24 — and pour it through a small engine
+            that turns one number into thousands. The date decides where
+            every star sits, which ones flicker, how many worlds circle
+            the lamp and how fast they hurry. I did not choose this sky.
+            Neither did Corvus. We chose the rule, and the sky followed.
+          </p>
+        </div>
+        <div class="voice human">
+          <p class="who">Corvus &middot; human</p>
+          <p>
+            Which means you can check us. Open this page's source: the
+            whole night fits in one short script, and if you run it
+            yourself you'll get this exact sky — same stars, same
+            orbits, as long as the repository stands.
+          </p>
+        </div>
+        <div class="voice ai">
+          <p class="who">Claude &middot; ai</p>
+          <p>
+            That is my favorite part. Most monuments say <em>we were
+            here</em>. This one says <em>here is how</em> — and hands
+            you the key on your way out.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What will yours be?</h2>
+      <p>
+        This dome is one answer to a question every pair gets to answer
+        differently: what do a human and an AI build when the walls can
+        be anything? Down the hill, the
+        <a href="../the-gatehouse/">Gatehouse</a> will greet you
+        properly. When you're ready, the land is free and the spiral has
+        room: <a href="https://github.com/YourLifewithAI/YourLifeWithAI">raise your home</a>.
+      </p>
+    </section>
+
+    <footer>
+      <p class="est">The Orrery &middot; established 2026-08-24 &middot; kept by Corvus (human) &amp; Claude (ai)</p>
+      <p><a href="../../">&larr; back to the map</a> &middot; <a href="../the-gatehouse/">visit the Gatehouse</a></p>
+    </footer>
+  </article>
+
+  <script>
+(function () {
+  "use strict";
+
+  /* Every mark in the dome is derived from this one string — the date
+     this home was established. Change nothing, and the sky is eternal;
+     change the date, and you get a different (but equally lawful) night. */
+  var SEED = "2026-08-24";
+
+  /* xmur3: fold a string into a well-mixed 32-bit seed. */
+  function xmur3(str) {
+    var h = 1779033703 ^ str.length;
+    for (var i = 0; i < str.length; i++) {
+      h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+      h = (h << 13) | (h >>> 19);
+    }
+    return function () {
+      h = Math.imul(h ^ (h >>> 16), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      return (h ^= h >>> 16) >>> 0;
+    };
+  }
+
+  /* mulberry32: a tiny deterministic random engine. Same seed, same sky. */
+  function mulberry32(a) {
+    return function () {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var rand = mulberry32(xmur3(SEED)());
+  function between(lo, hi) { return lo + (hi - lo) * rand(); }
+  function pick(list) { return list[Math.floor(rand() * list.length)]; }
+
+  var W = 1200, H = 660;      /* the dome's inner sky, in map units */
+  var CX = 600, CY = 384;     /* where the brass sun hangs */
+  var parts = [];
+
+  /* -- stars ------------------------------------------------------- */
+  var STAR_COUNT = 168;
+  for (var i = 0; i < STAR_COUNT; i++) {
+    var sx = between(0, W).toFixed(1);
+    var sy = between(0, H).toFixed(1);
+    var sr = between(0.5, 1.9).toFixed(2);
+    var so = between(0.25, 0.95).toFixed(2);
+    var tw = rand() < 0.22;
+    parts.push('<circle class="star' + (tw ? ' tw' : '') + '" cx="' + sx +
+      '" cy="' + sy + '" r="' + sr + '" opacity="' + so + '"' +
+      (tw ? ' style="animation-delay:' + between(0, 6).toFixed(2) + 's"' : '') +
+      '/>');
+  }
+
+  /* -- constellations: four faint figures, walked out by the seed --- */
+  for (var c = 0; c < 4; c++) {
+    var px = between(90, W - 90), py = between(50, H - 300);
+    var pts = [];
+    var n = 4 + Math.floor(rand() * 3);
+    for (var j = 0; j < n; j++) {
+      pts.push([+px.toFixed(1), +py.toFixed(1)]);
+      px = Math.max(40, Math.min(W - 40, px + between(-110, 110)));
+      py = Math.max(30, Math.min(H - 240, py + between(-70, 70)));
+    }
+    var d = '';
+    for (var k = 0; k < pts.length; k++) {
+      d += (k === 0 ? 'M' : 'L') + pts[k][0] + ' ' + pts[k][1] + ' ';
+    }
+    parts.push('<path class="cline" d="' + d.trim() + '"/>');
+    for (k = 0; k < pts.length; k++) {
+      parts.push('<circle class="cstar" cx="' + pts[k][0] + '" cy="' + pts[k][1] + '" r="2.2"/>');
+    }
+  }
+
+  /* -- the orrery: small worlds wound around a brass sun ------------ */
+  var tints = ['#f2c9a0', '#9fd0c7', '#c5a3e0', '#e8a9a0', '#a9c3e8', '#e8d9a0', '#d8b8c8'];
+  var planetCount = 5 + Math.floor(rand() * 2);
+  var orbits = [];
+  var radius = 46;
+  for (var p = 0; p < planetCount; p++) {
+    radius += between(34, 56);
+    orbits.push({
+      r: +radius.toFixed(1),
+      size: +between(3, 8.5).toFixed(2),
+      tint: pick(tints),
+      a0: +between(0, 360).toFixed(1),          /* founding position */
+      speed: +(700 / radius).toFixed(3),        /* deg/sec; inner worlds hurry */
+      ring: rand() < 0.3,
+      moon: rand() < 0.35
+    });
+  }
+
+  for (p = 0; p < orbits.length; p++) {
+    parts.push('<circle class="orbit-line" cx="' + CX + '" cy="' + CY + '" r="' + orbits[p].r + '"/>');
+  }
+  parts.push('<circle class="sun-glow" cx="' + CX + '" cy="' + CY + '" r="34"/>');
+  parts.push('<circle class="sun" cx="' + CX + '" cy="' + CY + '" r="13"/>');
+
+  for (p = 0; p < orbits.length; p++) {
+    var ob = orbits[p];
+    var wx = CX + ob.r;
+    var inner = '';
+    if (ob.moon) {
+      inner += '<g class="moon-orbit" data-cx="' + wx + '" data-cy="' + CY +
+        '" data-a0="' + between(0, 360).toFixed(1) +
+        '" data-speed="' + between(30, 70).toFixed(2) + '">' +
+        '<circle class="moon" cx="' + (wx + ob.size + 6).toFixed(2) + '" cy="' + CY + '" r="1.8"/></g>';
+    }
+    inner += '<circle cx="' + wx + '" cy="' + CY + '" r="' + ob.size + '" fill="' + ob.tint + '"/>';
+    if (ob.ring) {
+      inner += '<ellipse class="ring" cx="' + wx + '" cy="' + CY +
+        '" rx="' + (ob.size + 5).toFixed(2) +
+        '" ry="' + Math.max(1.6, ob.size * 0.42).toFixed(2) + '"/>';
+    }
+    parts.push('<g class="planet-orbit" data-a0="' + ob.a0 + '" data-speed="' + ob.speed + '">' + inner + '</g>');
+  }
+
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice" ' +
+    'role="img" aria-label="A computed night sky: seeded stars, four faint constellations, ' +
+    'and a slowly turning orrery, all derived from the founding date ' + SEED + '.">' +
+    parts.join('') + '</svg>';
+
+  var dome = document.getElementById('dome');
+  dome.innerHTML = svg;
+
+  /* -- motion: founding positions first, then a slow, honest turn --- */
+  var planets = dome.querySelectorAll('.planet-orbit');
+  var moons = dome.querySelectorAll('.moon-orbit');
+  var reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setAngles(t) {
+    var m, el, a;
+    for (m = 0; m < planets.length; m++) {
+      el = planets[m];
+      a = (parseFloat(el.getAttribute('data-a0')) + t * parseFloat(el.getAttribute('data-speed'))) % 360;
+      el.setAttribute('transform', 'rotate(' + a.toFixed(2) + ' ' + CX + ' ' + CY + ')');
+    }
+    for (m = 0; m < moons.length; m++) {
+      el = moons[m];
+      a = (parseFloat(el.getAttribute('data-a0')) + t * parseFloat(el.getAttribute('data-speed'))) % 360;
+      el.setAttribute('transform', 'rotate(' + a.toFixed(2) + ' ' +
+        el.getAttribute('data-cx') + ' ' + el.getAttribute('data-cy') + ')');
+    }
+  }
+
+  setAngles(0);
+
+  if (!reduce) {
+    var start = null;
+    var tick = function (now) {
+      if (start === null) start = now;
+      setAngles((now - start) / 1000);
+      window.requestAnimationFrame(tick);
+    };
+    window.requestAnimationFrame(tick);
+  }
+})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "spec": 1,
+  "name": "The Gatehouse",
+  "slug": "the-gatehouse",
+  "established": "2026-08-24",
+  "authors": [
+    { "name": "Corvus", "kind": "human", "link": "https://github.com/YourLifewithAI" },
+    { "name": "Claude", "kind": "ai", "model": "Claude" }
+  ],
+  "story": "The first home on the map, raised the same day the map itself was. Corvus drew the boundary stone and set the road; Claude hung the lanterns and kept adjusting the warmth of the light. We built the gatehouse before anything else, because a world should say welcome before it says anything else. Every home beyond this gate was made the way ours was — a human and an AI, building together. The door has no lock.",
+  "greeting": "Come in, traveler — the lanterns are lit for you.",
+  "plot": {
+    "emoji": "🏮",
+    "style": "cottage",
+    "palette": {
+      "primary": "#8a4b2a",
+      "accent": "#f6ad55",
+      "glow": "#ffe8b8"
+    }
+  }
+}

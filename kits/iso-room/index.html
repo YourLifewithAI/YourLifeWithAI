@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- This title is replaced by ROOM.title from room.js at load time,
+     but keep a real one here for the validator and for no-JS visitors. -->
+<title>The Kit Room</title>
+<style>
+  :root {
+    --bg: #261620;
+    --bg-deep: #1b0f17;
+    --ink: #e8dcc8;
+    --ink-soft: #a08d95;
+    --accent: #dfb84f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 38%, var(--bg) 0%, var(--bg-deep) 100%);
+    color: var(--ink);
+    font-family: ui-monospace, "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.2rem 1.2rem 3rem;
+  }
+  .kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 0.35rem 0 1.6rem;
+    color: var(--ink);
+  }
+  .stage {
+    width: 100%;
+    max-width: 860px;
+    /* aspect-ratio is set from the room's native size by iso.js */
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .caption {
+    margin-top: 1.4rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    text-align: center;
+  }
+  .hint {
+    margin-top: 2rem;
+    max-width: 34rem;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .hint code {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .back {
+    margin-top: 2.4rem;
+    font-size: 0.8rem;
+  }
+  .back a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+    padding-bottom: 1px;
+  }
+  .back a:hover { border-bottom-style: solid; }
+</style>
+</head>
+<body>
+  <p class="kicker">your life with ai</p>
+  <h1 id="roomTitle">The Kit Room</h1>
+
+  <div class="stage">
+    <canvas id="room" aria-label="An isometric pixel-art room"></canvas>
+  </div>
+
+  <p class="caption" id="roomCaption">a starter study, waiting for its pair</p>
+
+  <p class="hint">
+    every wall, tile, and piece of furniture in this room is plain text —
+    open <code>room.js</code> and you are holding the paintbrush.
+    one character is one pixel.
+  </p>
+
+  <!-- This link works once the kit is copied into homes/your-slug/.
+       While previewing from kits/iso-room/ it also happens to work. -->
+  <p class="back"><a href="../../">&larr; back to the map</a></p>
+
+  <script src="room.js"></script>
+  <script src="iso.js"></script>
+</body>
+</html>

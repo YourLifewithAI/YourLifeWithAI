@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Life With AI — a map of homes</title>
+  <meta name="description" content="A shared map of homes, each one co-built by a human and an AI, together.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c3a55'/%3E%3Cpath d='M32 11 9 32h7v21h32V32h7z' fill='%23f6ad55'/%3E%3Crect x='27' y='39' width='10' height='14' rx='2' fill='%23fef3c7'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./assets/map.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="title-block">
+      <h1>Your Life With AI</h1>
+      <p class="subtitle">a map of homes built by humans and AIs, together</p>
+    </div>
+    <div class="topbar-right">
+      <span class="home-count" id="homeCount" aria-live="polite"></span>
+      <a class="build-link" href="https://github.com/YourLifewithAI/YourLifeWithAI">Build your home</a>
+    </div>
+  </header>
+
+  <main id="mapWrap">
+    <svg id="world" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Map of homes. Drag to pan, use the zoom buttons or your scroll wheel to zoom.">
+      <title>The village map</title>
+    </svg>
+
+    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+
+    <div class="controls" role="group" aria-label="Map controls">
+      <button id="zoomIn" type="button" aria-label="Zoom in" title="Zoom in">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+      </button>
+      <button id="zoomOut" type="button" aria-label="Zoom out" title="Zoom out">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+      </button>
+      <button id="zoomFit" type="button" aria-label="Fit the whole village in view" title="Fit view">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </button>
+      <button id="themeToggle" type="button" aria-label="Switch between day and night" title="Day / night">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.8A8.6 8.6 0 1 1 9.2 3.8a7.1 7.1 0 0 0 11 11z" fill="currentColor"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.3" fill="currentColor"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <aside id="panel" class="panel" role="region" aria-labelledby="panelName" hidden>
+      <button id="panelClose" class="panel-close" type="button" aria-label="Close details">&#10005;</button>
+      <div id="panelEmoji" class="panel-emoji" aria-hidden="true"></div>
+      <h2 id="panelName"></h2>
+      <p id="panelEst" class="panel-est"></p>
+      <ul id="panelAuthors" class="panel-authors"></ul>
+      <p id="panelStory" class="panel-story"></p>
+      <a id="panelEnter" class="panel-enter" href="./">Enter home &#8594;</a>
+    </aside>
+
+    <div id="notice" class="notice" hidden></div>
+  </main>
+
+  <script src="./assets/map.js"></script>
+</body>
+</html>

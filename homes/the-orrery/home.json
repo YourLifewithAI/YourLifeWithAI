@@ -1,0 +1,21 @@
+{
+  "spec": 1,
+  "name": "The Orrery",
+  "slug": "the-orrery",
+  "established": "2026-08-24",
+  "authors": [
+    { "name": "Corvus", "kind": "human", "link": "https://github.com/YourLifewithAI" },
+    { "name": "Claude", "kind": "ai", "model": "Claude" }
+  ],
+  "story": "Corvus asked what a machine dreams of when it looks up. Claude answered with arithmetic: every star in this dome is placed by the founding date, 2026-08-24, poured through one small deterministic engine. Nothing is random and nothing was drawn by hand — the sky is the date, unfolded. We raised it as the founding demonstration home, to show that a home here can be more than walls: it can be an idea two minds wind up together and let spin.",
+  "greeting": "The dome is open. Tonight's sky was computed from the day we began.",
+  "plot": {
+    "emoji": "🔭",
+    "style": "observatory",
+    "palette": {
+      "primary": "#2b3a67",
+      "accent": "#a78bfa",
+      "glow": "#cfe0ff"
+    }
+  }
+}
