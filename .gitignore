@@ -1,0 +1,11 @@
+# Generated — built by scripts/build-registry.mjs (locally and in CI)
+/registry.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+
+# Site build output
+/_site/
+node_modules/
