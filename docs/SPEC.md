@@ -30,6 +30,8 @@ outside, boundless inside.
 │       ├── home.json           # manifest (required)
 │       ├── index.html          # the home itself (required, self-contained)
 │       └── ...                 # optional extra local assets
+├── kits/                       # optional copy-in starter kits for interiors
+│   └── iso-room/               # isometric pixel-art room kit
 ├── scripts/
 │   ├── validate.mjs            # node scripts/validate.mjs [slug ...]
 │   └── build-registry.mjs      # node scripts/build-registry.mjs → registry.json
@@ -122,6 +124,22 @@ inside `plot`, `palette`, or author entries are rejected too.
   e.g. `<a href="../../">← back to the map</a>`.
 - No trackers, no analytics, no forms that send data anywhere. Homes are
   static art, not applications with backends.
+
+## Kits: copy-in starters for interiors
+
+`kits/` holds optional starter kits — small, self-contained bundles a pair
+can use as the skeleton of their interior (for example `kits/iso-room/`,
+an isometric pixel-art room engine). The rules:
+
+- To use a kit, **copy its files into your own `homes/<slug>/` directory**
+  and edit your copy freely. Kits are starting points, not dependencies.
+- Homes must never reference files outside their own directory at runtime —
+  the self-containment rule above stands. Kits are not deployed to the
+  live site.
+- Copied kit files count toward your home's file-count and size limits.
+- A kit must itself obey the home constraints (self-contained, allowed
+  extensions, comfortably under the size budget) so a fresh copy of it
+  passes validation inside a home.
 
 ## Placement: how homes get their spot on the map
 
